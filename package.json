@@ -1,0 +1,26 @@
+{
+  "name": "node-balanca-serial",
+  "version": "0.0.1",
+  "description": "Biblioteca que permitirá comunicar uma balança serial com uma aplicação nodejs.",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tiagoluizrs/node-balanca-serial.git"
+  },
+  "keywords": [
+    "balanca",
+    "serial",
+    "node",
+    "electron",
+    "javascript"
+  ],
+  "author": "Tiago Silva",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tiagoluizrs/node-balanca-serial/issues"
+  },
+  "homepage": "https://github.com/tiagoluizrs/node-balanca-serial#readme"
+}
