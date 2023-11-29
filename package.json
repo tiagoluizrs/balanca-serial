@@ -1,6 +1,6 @@
 {
   "name": "node-balanca-serial",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Biblioteca que permitirá comunicar uma balança serial com uma aplicação nodejs.",
   "main": "index.js",
   "scripts": {
