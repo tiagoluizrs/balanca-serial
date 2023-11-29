@@ -7,28 +7,50 @@ const port = new SerialPort({
     dataBits: 8,
     stopBits: 1,
     parity: 'none',
-    autoOpen: true,
-});
+    autoOpen: false,
+})
+
+// Função para abrir a porta serial
+function openPort() {
+    port.open((err) => {
+        if (err) {
+            console.error('Erro ao abrir a porta serial:', err.message);
+        } else {
+            console.log(`Conexão estabelecida com COM3`);
+        }
+    });
+}
+
+function closePort() {
+    port.close((err) => {
+        if (err) {
+            console.error('Erro ao fechar a porta serial:', err.message);
+        } else {
+            console.log('Porta serial fechada');
+        }
+    });
+}
 
 port.write(String.fromCharCode('5'), function (err) {
     if (err) {
-        port.close();
+        closePort();
         return console.error(err.message);
     }
 });
 
-port.once('error', function (err) {
-    console.error(err.message);
-    port.close();
-});
-
-port.once('data', function (data) {
+port.once('data', (data) => {
     if (data != '') {
         console.log(data.toString())
-        port.close();
+        closePort();
     } else {
-        port.close();
-        res.json({ "peso":'0.00' });
+        console.log({ "peso":'0.00' });
+        closePort();
     }
 });
 
+port.on('error', (err) => {
+    console.error('Erro na porta serial:', err.message);
+    closePort();
+});
+
+openPort();

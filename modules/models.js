@@ -41,4 +41,4 @@ const predefinedBalances = (type, instance) => {
     }
 }
 
-export default predefinedBalances;
+module.exports = predefinedBalances;

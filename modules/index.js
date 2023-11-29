@@ -1,1 +1,5 @@
-export { default as Scale } from './Balance';
+const Balance = require('./Balance');
+
+module.exports = {
+    Balance
+};

@@ -1,34 +1,55 @@
-const { SerialPort } = require('serialport')
-const { ReadlineParser } = require('@serialport/parser-readline')
+const { SerialPort } = require('serialport');
+const { ReadlineParser } = require('@serialport/parser-readline');
 
-const port = new SerialPort({
-    path: 'COM3',
-    baudRate: 9600,
-    dataBits: 8,
-    stopBits: 1,
-    parity: 'none',
-    autoOpen: true,
-});
-
-port.write(String.fromCharCode('5'), function (err) {
-    if (err) {
-        port.close();
-        return console.error(err.message);
+function iniciarComunicacao(path, d) {
+    const data = {
+        path: path,
+        ...d
     }
-});
+    return new Promise((resolve, reject) => {
+        const port = new SerialPort(data);
+        const openPort = () => {
+            port.open((err) => {
+                if (err) {
+                    reject(`Erro ao abrir a porta serial: ${err.message}`);
+                }
+            });
+        };
 
-port.once('error', function (err) {
-    console.error(err.message);
-    port.close();
-});
+        const closePort = () => {
+            port.close((err) => {
+                if (err) {
+                    console.error('Erro ao fechar a porta serial:', err.message);
+                }
+            });
+        };
 
-port.once('data', function (data) {
-    if (data != '') {
-        console.log(data.toString())
-        port.close();
-    } else {
-        port.close();
-        res.json({ "peso":'0.00' });
-    }
-});
+        port.write(String.fromCharCode('5'), (err) => {
+            if (err) {
+                closePort();
+                reject(err.message);
+            }
+        });
 
+        port.once('data', (data) => {
+            if (data && data.length > 0) {
+                const dataString = data.toString();
+                closePort();
+                resolve(dataString);
+            } else {
+                closePort();
+                resolve({ peso: '0.00' });
+            }
+        });
+
+        port.on('error', (err) => {
+            console.error('Erro na porta serial:', err.message);
+            closePort();
+            reject(err.message);
+        });
+
+        openPort();
+    });
+}
+
+module.exports = iniciarComunicacao
