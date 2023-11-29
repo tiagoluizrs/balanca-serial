@@ -1,6 +1,3 @@
-//index.js
+const {Balance} = require("./modules");
 
-exports.printMsg = function() {
-    console.log("Primeira configuração da biblioteca");
-    // Em breve as funções dessa lib estarão aqui.
-}
+module.exports = Balance;
