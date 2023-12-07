@@ -16,27 +16,21 @@ class Balance{
         }
     }
 
-    async comunicate(){
+    comunicate(){
         const data = {
             baudRate: this.baudRate,
             dataBits: this.dataBits,
             stopBits: 1,
             parity: this.parity,
             handshake: this.handshake,
-            autoOpen: false,
+            autoOpen: this.autoOpen,
         };
 
         if(this.stopBits){
             data.stopBits = this.stopBits;
         }
 
-        try {
-            const d = await iniciarComunicacao(this.port, data);
-            return d;
-        } catch (error) {
-            console.error('Erro:', error);
-            return 0;
-        }
+        return iniciarComunicacao(this.port, data);
     }
 }
 

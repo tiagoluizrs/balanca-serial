@@ -5,12 +5,17 @@ const b = new Balance('COM3', {
     dataBits: 8,
     stopBits: 1,
     parity: 'none',
-    autoOpen: false,
+    autoOpen: true,
 });
 
 async function t(){
-    const d = await b.comunicate();
-    console.log(d);
+    const port = b.comunicate();
+    port.on("open", function () {
+        port.on('data', function(data) {
+            const dataString = data.toString();
+            console.log(dataString)
+        });
+    });
 }
 
 t()
