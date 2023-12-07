@@ -16,6 +16,8 @@ async function t(){
             console.log(dataString)
         });
     });
+
+    // Use port.getPrice() para pegar o preço;
 }
 
 t()

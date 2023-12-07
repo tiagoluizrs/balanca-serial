@@ -14,6 +14,12 @@ function iniciarComunicacao(path, d) {
         console.error('Erro na porta serial:', err.message);
     });
 
+    function getPrice(){
+        port.write(String.fromCharCode('5'), (err) => {});
+    }
+
+    port.getPrice = getPrice;
+
     return port;
 }
 
